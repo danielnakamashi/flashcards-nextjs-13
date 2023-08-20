@@ -1,6 +1,7 @@
 import { OAuth2Client } from 'google-auth-library'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
+import { redirect } from 'next/navigation'
 
 export async function POST(request: Request) {
   const cookieStore = cookies()
@@ -35,10 +36,13 @@ export async function POST(request: Request) {
     })
     const payload = ticket.getPayload()
 
-    return NextResponse.json(payload)
-    return
+    console.log(payload)
+
+    return NextResponse.redirect(new URL('/topics', request.url), { status: 303 })
   } catch (error) {
     console.error(error)
+
+    return NextResponse.redirect(new URL('/', request.url), { status: 303 })
   }
 }
 
