@@ -5,7 +5,7 @@ export function GoogleSigninButton() {
         data-client_id="842785544896-0c6u8713dnt6ogbfg8m9iqidtkdtiv8o.apps.googleusercontent.com"
         data-context="use"
         data-ux_mode="popup"
-        data-login_uri="http://localhost:3000/api/google-login-callback"
+        data-login_uri="/google-login-callback"
         data-auto_select="true"
         data-itp_support="true">
       </div>
