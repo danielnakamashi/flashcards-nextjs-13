@@ -12,7 +12,7 @@ export default function Home() {
   }
 
   if (status === 'unauthenticated') {
-    return <h1>Home Page</h1>
+    return redirect('/api/auth/signin', RedirectType.replace)
   }
 
   redirect('/topics', RedirectType.replace)
