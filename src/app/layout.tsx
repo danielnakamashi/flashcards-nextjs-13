@@ -1,7 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
-import Script from 'next/script'
+import NextAuthProvider from '@/components/NextAuthProvider'
 
 const font = Open_Sans({ subsets: ['latin'] })
 
@@ -17,8 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={font.className}>{children}</body>
-      <Script src="https://accounts.google.com/gsi/client" />
+      <body className={font.className}>
+        <NextAuthProvider>{children}</NextAuthProvider>
+      </body>
     </html>
   )
 }

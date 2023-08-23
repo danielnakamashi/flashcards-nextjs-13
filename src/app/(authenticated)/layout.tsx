@@ -1,4 +1,8 @@
-export default function AuthenticatedLayout({ children }: { children: React.ReactNode }) {
+export default function AuthenticatedLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <>
       <header>Header</header>
