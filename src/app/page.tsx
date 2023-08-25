@@ -1,19 +1,15 @@
-'use client'
-
 import { redirect } from 'next/navigation'
-import { useSession } from 'next-auth/react'
 import { RedirectType } from 'next/dist/client/components/redirect'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import { ProvidersList } from './components/ProvidersList'
 
-export default function Home() {
-  const { status } = useSession()
+export default async function Home() {
+  const session = await getServerSession(authOptions)
 
-  if (status === 'loading') {
-    return <div>loading...</div>
+  if (session) {
+    return redirect('/topics', RedirectType.replace)
   }
 
-  if (status === 'unauthenticated') {
-    return redirect('/api/auth/signin', RedirectType.replace)
-  }
-
-  redirect('/topics', RedirectType.replace)
+  return <ProvidersList />
 }

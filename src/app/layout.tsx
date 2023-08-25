@@ -1,7 +1,8 @@
 import './globals.css'
+import '@radix-ui/themes/styles.css'
 import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
-import NextAuthProvider from '@/components/NextAuthProvider'
+import { Theme } from '@radix-ui/themes'
 
 const font = Open_Sans({ subsets: ['latin'] })
 
@@ -18,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        <NextAuthProvider>{children}</NextAuthProvider>
+        <Theme appearance="light" accentColor="orange" panelBackground="solid">
+          {children}
+        </Theme>
       </body>
     </html>
   )
