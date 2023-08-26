@@ -3,6 +3,7 @@ import { getServerSession } from 'next-auth'
 import NextAuthProvider from '@/components/NextAuthProvider'
 import { authOptions } from '@/lib/auth'
 import { Header } from './components/Header'
+import { Flex } from '@radix-ui/themes'
 
 export default async function AuthenticatedLayout({
   children,
@@ -18,8 +19,10 @@ export default async function AuthenticatedLayout({
   return (
     <NextAuthProvider>
       <Header />
-      <nav>Navigation</nav>
-      <main>{children}</main>
+      <Flex p="4">
+        <nav>Navigation</nav>
+        <main>{children}</main>
+      </Flex>
     </NextAuthProvider>
   )
 }

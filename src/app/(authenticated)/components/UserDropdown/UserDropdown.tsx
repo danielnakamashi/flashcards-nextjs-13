@@ -10,13 +10,13 @@ export function UserDropdown({ name, image }: { name: string; image: string }) {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger>
-        <Button variant="ghost" size="4" radius="small">
+        <Button variant="ghost" size="3" radius="small">
           {name}
           <Image
             src={image}
             alt="Profile picture"
-            width={36}
-            height={36}
+            width={20}
+            height={20}
             className={styles.profilePicture}
           />
           <CaretDownIcon />
