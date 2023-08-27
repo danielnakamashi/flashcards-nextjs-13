@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Box, Flex, Text } from '@radix-ui/themes'
+import { Box, Flex, Text } from '@mantine/core'
 import { CardInner } from './CardInner'
 import styles from './Card.module.scss'
 
@@ -8,10 +8,10 @@ export function Card() {
     <Box className={styles.container}>
       <CardInner>
         <Flex className={styles.front} justify="center" align="center">
-          <Text size="7">Question</Text>
+          <Text fz="lg">Question</Text>
         </Flex>
         <Flex className={styles.back} justify="center" align="center">
-          <Text size="7">Answer</Text>
+          <Text fz="lg">Answer</Text>
         </Flex>
       </CardInner>
     </Box>

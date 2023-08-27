@@ -1,15 +1,15 @@
-import { Heading, Flex } from '@radix-ui/themes'
+import { Title, Flex, Box, Group } from '@mantine/core'
 import { Card } from '@/app/components/Card'
 
 export default function TopicsPage() {
   return (
-    <Flex direction="column" gap="9">
-      <Heading as="h2">Topics</Heading>
-      <ul>
-        <li>
+    <Box p="lg">
+      <Flex direction="column" gap="lg">
+        <Title>Topics</Title>
+        <Group>
           <Card />
-        </li>
-      </ul>
-    </Flex>
+        </Group>
+      </Flex>
+    </Box>
   )
 }

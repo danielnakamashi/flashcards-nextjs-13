@@ -1,19 +1,11 @@
-import NavLink from 'next/link'
-import { Box, Link } from '@radix-ui/themes'
-import styles from './Navigation.module.scss'
+import Link from 'next/link'
+import { NavLink, Box } from '@mantine/core'
 
 export function Navigation() {
   return (
-    <Box asChild width="max-content" p="4">
-      <nav>
-        <ul className={styles.list}>
-          <li>
-            <NavLink href="/topics" passHref legacyBehavior>
-              <Link>Topics</Link>
-            </NavLink>
-          </li>
-        </ul>
-      </nav>
+    <Box>
+      <NavLink label="Topics" component={Link} href="/topics" />
+      <NavLink label="Add Topic" component={Link} href="/add-topic" />
     </Box>
   )
 }

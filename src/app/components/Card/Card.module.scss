@@ -1,6 +1,6 @@
 .container {
-  width: 384px; //calc(var(--space-9) * 6);
-  height: 192px; //calc(var(--space-9) * 3);
+  width: 384px;
+  height: 192px;
   background-color: transparent;
   perspective: 1000px;
 
@@ -9,7 +9,7 @@
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
-    padding: var(--space-4);
+    padding: 12px;
   }
 
   .back {

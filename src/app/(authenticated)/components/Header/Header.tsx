@@ -1,7 +1,8 @@
 import { getServerSession } from 'next-auth'
-import { Heading, Flex } from '@radix-ui/themes'
+import { Flex, Title } from '@mantine/core'
 import { authOptions } from '@/lib/auth'
 import { UserDropdown } from '../UserDropdown'
+import styles from './Header.module.scss'
 
 export async function Header() {
   const session = await getServerSession(authOptions)
@@ -15,11 +16,15 @@ export async function Header() {
   } = session
 
   return (
-    <Flex align="center" justify="between" p="4" asChild>
-      <header>
-        <Heading>Flashcards NextJS 13</Heading>
-        <UserDropdown name={name} image={image} />
-      </header>
+    <Flex
+      align="center"
+      justify="space-between"
+      direction="row"
+      px="lg"
+      className={styles.container}
+    >
+      <Title order={1}>Flashcards NextJS 13</Title>
+      <UserDropdown name={name} image={image} />
     </Flex>
   )
 }
