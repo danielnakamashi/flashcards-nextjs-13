@@ -1,0 +1,13 @@
+.question, .answer {
+  flex-grow: 1;
+}
+
+.deleteButton {
+  align-self: flex-end;
+  width: 120px;
+}
+
+.submitButton {
+  align-self: center;
+  width: 120px;
+}
