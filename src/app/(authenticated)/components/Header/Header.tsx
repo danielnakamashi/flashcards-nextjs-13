@@ -2,7 +2,6 @@ import { getServerSession } from 'next-auth'
 import { Heading, Flex } from '@radix-ui/themes'
 import { authOptions } from '@/lib/auth'
 import { UserDropdown } from '../UserDropdown'
-import styles from './Header.module.scss'
 
 export async function Header() {
   const session = await getServerSession(authOptions)

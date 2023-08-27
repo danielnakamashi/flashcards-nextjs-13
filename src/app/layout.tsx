@@ -1,5 +1,6 @@
 import './globals.css'
 import '@radix-ui/themes/styles.css'
+import '@radix-ui/colors/gray.css'
 import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
 import { Theme } from '@radix-ui/themes'
