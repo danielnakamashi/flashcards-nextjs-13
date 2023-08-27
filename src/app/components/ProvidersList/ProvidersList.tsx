@@ -1,6 +1,6 @@
 import { getProviders } from 'next-auth/react'
 import { Flex } from '@radix-ui/themes'
-import { ProviderButton } from './ProviderButton'
+import { ProviderButton } from '../ProviderButton'
 import styles from './ProvidersList.module.scss'
 
 export async function ProvidersList() {
