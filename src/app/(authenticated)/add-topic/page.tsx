@@ -3,33 +3,27 @@
 import * as React from 'react'
 import { Title, Flex, Box, Input, InputWrapper, Button } from '@mantine/core'
 import { useForm, useFieldArray } from 'react-hook-form'
-import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
+import { addTopicFormSchema, AddTopicForm } from '@/schemas/addTopicForm'
+import { addTopic } from '@/actions/addTopic'
 import styles from './page.module.scss'
 
-const schema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  cards: z.array(
-    z.object({
-      question: z.string().min(1, 'Question is required'),
-      answer: z.string().min(1, 'Answer is required'),
-    }),
-  ),
-})
-
-type Schema = z.infer<typeof schema>
-
 export default function AddTopicPage() {
+  const router = useRouter()
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     control,
-  } = useForm<Schema>({
-    resolver: zodResolver(schema),
+  } = useForm<AddTopicForm>({
+    resolver: zodResolver(addTopicFormSchema),
   })
   const { fields, append, remove } = useFieldArray({ control, name: 'cards' })
-  const onSubmit = (values: Schema) => console.log('submit', values)
+  const onSubmit = async (values: AddTopicForm) => {
+    await addTopic(values)
+    router.push('/topics')
+  }
 
   return (
     <Box p="lg">
@@ -79,7 +73,13 @@ export default function AddTopicPage() {
               >
                 Add new card
               </Button>
-              <Button type="submit">Submit</Button>
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                loading={isSubmitting}
+              >
+                Submit
+              </Button>
             </Flex>
           </Flex>
         </form>
