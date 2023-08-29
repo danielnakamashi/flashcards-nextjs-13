@@ -1,0 +1,67 @@
+$ANIMATION_TIME: 500ms;
+
+.container {
+  width: 384px;
+  height: 192px;
+  position: relative;
+
+  &::before, &::after {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: block;
+    content: '';
+    position: absolute;
+    box-shadow: 0px 0px 5px 0px rgba(125,125,125,1);
+    top: 0;
+    left: 0;
+    z-index: 2;
+    will-change: transform;
+  }
+
+  &::before {
+    transform: rotate(3deg);
+  }
+
+  &::after {
+    transform: rotate(-3deg);
+  }
+
+  .inner {
+    position: absolute;
+  }
+
+  .backCard {
+    z-index: 3;
+    transform-origin: 200% 100%;
+
+    &.prevCardAnimation {
+      animation: $ANIMATION_TIME reverse nextCardKeyFrames forwards;
+    }
+  }
+
+  .frontCard {
+    z-index: 4;
+    transform-origin: 200% 100%;
+
+    &.nextCardAnimation {
+      animation: $ANIMATION_TIME nextCardKeyFrames forwards;
+    }
+  }
+}
+
+@keyframes nextCardKeyFrames {
+  0% {
+    transform: rotate(0);
+    z-index: 5;
+  }
+
+  50% {
+    transform: rotate(30deg);
+  }
+
+  100% {
+    transform: rotate(0);
+    z-index: 1;
+  }
+}

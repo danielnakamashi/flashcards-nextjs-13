@@ -1,17 +1,26 @@
 import * as React from 'react'
 import { Box, Flex, Text } from '@mantine/core'
+import cn from 'classnames'
 import { CardInner } from './CardInner'
 import styles from './Card.module.scss'
 
-export function Card() {
+export function Card({
+  className,
+  question,
+  answer,
+}: {
+  question: string
+  answer: string
+  className?: string
+}) {
   return (
-    <Box className={styles.container}>
+    <Box className={cn(styles.container, className)}>
       <CardInner>
         <Flex className={styles.front} justify="center" align="center">
-          <Text fz="lg">Question</Text>
+          <Text fz="lg">{question}</Text>
         </Flex>
         <Flex className={styles.back} justify="center" align="center">
-          <Text fz="lg">Answer</Text>
+          <Text fz="lg">{answer}</Text>
         </Flex>
       </CardInner>
     </Box>

@@ -1,5 +1,5 @@
 import { Title, Flex, Box, Group } from '@mantine/core'
-import { Card } from '@/app/components/Card'
+import { CardStack } from '@/app/components/CardStack'
 import { getTopicBySlug } from '@/actions/getTopicBySlug'
 
 export default async function TopicPage({
@@ -14,7 +14,7 @@ export default async function TopicPage({
       <Flex direction="column" gap="lg">
         <Title>{topic?.name}</Title>
         <Group>
-          <Card />
+          <CardStack cards={topic?.cards ?? []} />
         </Group>
       </Flex>
     </Box>
