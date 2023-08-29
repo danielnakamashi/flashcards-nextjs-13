@@ -13,9 +13,7 @@ export default async function TopicPage({
     <Box p="lg">
       <Flex direction="column" gap="lg">
         <Title>{topic?.name}</Title>
-        <Group>
-          <CardStack cards={topic?.cards ?? []} />
-        </Group>
+        <CardStack cards={topic?.cards ?? []} />
       </Flex>
     </Box>
   )

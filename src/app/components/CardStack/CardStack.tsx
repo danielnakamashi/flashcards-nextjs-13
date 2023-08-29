@@ -1,112 +1,103 @@
 'use client'
 
 import * as React from 'react'
-import { Box, Flex, Button } from '@mantine/core'
+import { Box, Flex, Button, Center } from '@mantine/core'
 import cn from 'classnames'
 import { Card } from '@/app/components/Card'
 import styles from './CardStack.module.scss'
 
+function getCyclingIndex(index: number, max: number): number {
+  return (max + index) % max
+}
+
 export function CardStack({
   cards,
+  isCircular = true,
 }: {
   cards: { question: string; answer: string }[]
+  isCircular?: boolean
 }) {
   const [currentCardIndex, setCurrentCardIndex] = React.useState(0)
-  const [showNextCard, setShowNextCard] = React.useState(false)
-  const [showPrevCard, setShowPrevCard] = React.useState(false)
-  const frontCardRef = React.useRef<HTMLDivElement>(null)
-  const backCardRef = React.useRef<HTMLDivElement>(null)
-  const containerRef = React.useRef<HTMLDivElement>(null)
+  const [isAnimatingTo, setIsAnimatingTo] = React.useState<
+    'nextCard' | 'prevCard' | null
+  >(null)
 
-  const nextCardClickHandler = () => {
-    if (currentCardIndex < cards.length - 1) {
-      setShowNextCard(true)
+  const nextCardButtonClickHandler = () => {
+    if (isCircular || currentCardIndex < cards.length - 1) {
+      setIsAnimatingTo('nextCard')
     }
   }
-  const prevCardClickHandler = () => {
-    if (currentCardIndex > 0) {
-      setShowPrevCard(true)
+  const prevCardButtonClickHandler = () => {
+    if (isCircular || currentCardIndex > 0) {
+      setIsAnimatingTo('prevCard')
     }
   }
-
-  React.useEffect(() => {
-    const frontCardEl = frontCardRef.current
-    const animationEndHandler = () => {
-      setShowNextCard(false)
-      setCurrentCardIndex((index) => index + 1)
-    }
-    frontCardEl?.addEventListener('animationend', animationEndHandler, false)
-
-    return () => {
-      frontCardEl?.removeEventListener('animationend', animationEndHandler)
-    }
-  }, [])
-  React.useEffect(() => {
-    const backCardEl = backCardRef.current
-    const animationEndHandler = () => {
-      setShowPrevCard(false)
-      setCurrentCardIndex((index) => index - 1)
-    }
-    backCardEl?.addEventListener('animationend', animationEndHandler, false)
-
-    return () => {
-      backCardEl?.removeEventListener('animationend', animationEndHandler)
-    }
-  }, [showPrevCard])
+  const nextCardAnimationEnded = () => {
+    setIsAnimatingTo(null)
+    setCurrentCardIndex((index) => getCyclingIndex(index + 1, cards.length))
+  }
+  const prevCardAnimationEnded = () => {
+    setIsAnimatingTo(null)
+    setCurrentCardIndex((index) => getCyclingIndex(index - 1, cards.length))
+  }
 
   return (
-    <Flex direction="column" gap="lg">
-      <Box className={styles.container} ref={containerRef}>
-        {showNextCard && (
-          <Box className={cn(styles.inner, styles.backCard)}>
-            <Card
-              question={cards[currentCardIndex + 1]?.question ?? ''}
-              answer={cards[currentCardIndex + 1]?.answer ?? ''}
-            />
-          </Box>
-        )}
-        {showPrevCard && (
+    <Center>
+      <Flex direction="column" gap="lg">
+        <Box className={styles.container}>
+          {isAnimatingTo === 'nextCard' && (
+            <Box className={cn(styles.inner, styles.backCard)}>
+              <Card
+                question={
+                  cards[getCyclingIndex(currentCardIndex + 1, cards.length)]
+                    ?.question ?? ''
+                }
+                answer={
+                  cards[getCyclingIndex(currentCardIndex + 1, cards.length)]
+                    ?.answer ?? ''
+                }
+              />
+            </Box>
+          )}
+          {isAnimatingTo === 'prevCard' && (
+            <Box
+              className={cn(
+                styles.inner,
+                styles.backCard,
+                styles.prevCardAnimation,
+              )}
+              onAnimationEnd={prevCardAnimationEnded}
+            >
+              <Card
+                question={
+                  cards[getCyclingIndex(currentCardIndex - 1, cards.length)]
+                    ?.question ?? ''
+                }
+                answer={
+                  cards[getCyclingIndex(currentCardIndex - 1, cards.length)]
+                    ?.answer ?? ''
+                }
+              />
+            </Box>
+          )}
           <Box
-            className={cn(styles.inner, styles.backCard, {
-              [styles.prevCardAnimation]: showPrevCard,
+            className={cn(styles.inner, styles.frontCard, {
+              [styles.nextCardAnimation]: isAnimatingTo === 'nextCard',
             })}
-            ref={backCardRef}
+            onAnimationEnd={nextCardAnimationEnded}
           >
             <Card
-              question={cards[currentCardIndex - 1]?.question ?? ''}
-              answer={cards[currentCardIndex - 1]?.answer ?? ''}
+              key={currentCardIndex}
+              question={cards[currentCardIndex]?.question ?? ''}
+              answer={cards[currentCardIndex]?.answer ?? ''}
             />
           </Box>
-        )}
-        <Box
-          className={cn(styles.inner, styles.frontCard, {
-            [styles.nextCardAnimation]: showNextCard,
-          })}
-          ref={frontCardRef}
-        >
-          <Card
-            key={currentCardIndex}
-            question={cards[currentCardIndex]?.question ?? ''}
-            answer={cards[currentCardIndex]?.answer ?? ''}
-          />
         </Box>
-      </Box>
-      <Flex justify="space-between">
-        <Button
-          onClick={() => {
-            prevCardClickHandler()
-          }}
-        >
-          Previous card
-        </Button>
-        <Button
-          onClick={() => {
-            nextCardClickHandler()
-          }}
-        >
-          Next card
-        </Button>
+        <Flex justify="space-between">
+          <Button onClick={prevCardButtonClickHandler}>Previous card</Button>
+          <Button onClick={nextCardButtonClickHandler}>Next card</Button>
+        </Flex>
       </Flex>
-    </Flex>
+    </Center>
   )
 }
